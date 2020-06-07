@@ -1,0 +1,46 @@
+@mixin baseMessage {
+  color: white;
+  padding: 5px;
+  margin: 4px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: inline-block;
+  word-wrap: break-word;
+  max-width: 50%;
+}
+
+.userMessage {
+  @include baseMessage;
+  background-color: steelblue;
+  float: left;
+  margin-left: 7px;
+}
+
+.oponentMessage {
+  @include baseMessage;
+  background-color: goldenrod;
+  float: right;
+  margin-right: 7px;
+}
+
+@mixin baseTime {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.739);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 8px;
+  height: 100%;
+}
+
+.userTime {
+  @include baseTime;
+  float: left;
+  
+}
+
+.oponentTime {
+  @include baseTime;
+  float: right;
+}
+

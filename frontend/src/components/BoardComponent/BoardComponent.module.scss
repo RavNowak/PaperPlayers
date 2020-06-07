@@ -1,0 +1,33 @@
+$boardColor: rgba(0, 0, 0, 0.755);
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin board {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: $boardColor;
+    // border-radius: 15px;
+    cursor: pointer;
+  }
+  
+  .smallBoard {
+    @include board;
+    height: 247px;
+    width: 411px;
+  }
+  
+  .mediumBoard {
+    @include board;
+    height: 329px;
+    width: 493px;
+  }
+  
+  .bigBoard {
+    @include board;
+    height: 411px;
+    width: 575px;
+  }

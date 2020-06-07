@@ -1,0 +1,37 @@
+$goalBackgroundColor: rgba(0, 0, 0, 0.755);
+
+.goalContainer {
+    width: 40px;
+    height: 329px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: black; */
+  }
+
+  @mixin goal {
+    width: 40px;
+    height: 80px;
+    background-color: $goalBackgroundColor;
+  }
+  
+  .goal {
+    width: 40px;
+    height: 80px;
+    background-color: $goalBackgroundColor;
+  }
+
+  .redGoal {
+    @include goal();
+    border: 1px dashed red;
+  }
+
+  .greenGoal {
+    @include goal();
+    border: 1px dashed green;
+  }
+
+  .blueGoal {
+    @include goal();
+    border: 1px dashed blue;
+  }

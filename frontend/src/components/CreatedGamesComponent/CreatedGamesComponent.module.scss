@@ -1,0 +1,81 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // justify-content: center;
+  width: 100%;
+  height: 150px;
+  min-height: 170px;
+  border: 1px solid white;
+  border-radius: 8px;
+  overflow-y: auto;
+}
+
+.waitingFont {
+  color: white;
+  padding: 15px;
+  font-size: 12px;
+}
+
+.noGamesFont {
+  color: white;
+  font-size: 18px;
+  // padding: 15px;
+}
+
+.singleGame {
+  width: 96%;
+  height: auto;
+  padding: 5px 0;
+  margin: 3px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: rgba(236, 164, 29, 0.802);
+  border-radius: 12px;
+}
+
+.singleGame:hover {
+  background-color: rgba(236, 164, 29, 0.902);
+}
+
+.descriptionGame {
+  width: 96%;
+  height: auto;
+  padding: 7px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  // background-color: rgb(171, 168, 168);
+}
+
+.descriptionItem {
+  color: white;
+  width: 24%;
+  text-align: center;
+}
+
+.playerItem {
+  color: white;
+  width: 24%;
+  text-align: center;
+}
+
+.borderSizeItem {
+  color: white;
+  width: 24%;
+  text-align: center;
+}
+
+.rules {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 24%;
+  text-align: center;
+}
+
+.joinButton {
+  width: 24%;
+  text-align: center;
+}

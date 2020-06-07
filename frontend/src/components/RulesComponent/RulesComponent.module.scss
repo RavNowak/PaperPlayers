@@ -1,0 +1,59 @@
+$formColor: rgba(0, 0, 0, 0.537);
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+  min-height: 340px;
+  background-color: $formColor;
+  border-radius: 8px;
+}
+
+.rulesFont {
+  color: white;
+  padding: 15px 0;
+  font-size: 20px;
+}
+
+.selectContainer {
+  width: 80%;
+  margin: 2px 0;
+  margin: 5px 0;
+}
+
+.checkBoxContainer {
+  width: 88%;
+  margin: 8px 0;
+}
+
+.settings {
+  width: 100%;
+  display: flex;
+}
+
+.selects {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.checkBoxses {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.submitRules {
+  width: 42%;
+  // height: 40px;
+  display: flex;
+  padding: 0px 10px;
+  justify-content: space-around;
+  margin-top: auto;
+  margin-bottom: 12px;
+  // margin: 12px 0 12px;
+}

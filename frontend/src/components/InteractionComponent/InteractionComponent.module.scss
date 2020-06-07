@@ -1,0 +1,37 @@
+$boardColor: rgba(0, 0, 0, 0.755);
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // justify-content: space-evenly;
+  width: 90%;
+  height: 411px; 
+  background-color: $boardColor;
+  border-radius: 15px;
+}
+
+.whovswho {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  color: rgb(218, 165, 32);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin: 10px 0;
+  padding-bottom: 5px;
+  border-bottom: 1px solid white;
+}
+
+.botMessage {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  color: rgb(214, 202, 170);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-bottom: 15px;
+}

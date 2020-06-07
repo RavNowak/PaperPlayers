@@ -1,0 +1,56 @@
+$borderLine: 1px dashed white;
+$centerLine: 1px dashed rgba(255, 255, 0, 0.675);
+$cornerRadius: 15px;
+
+.basicSquare {
+  width: 40px;
+  height: 40px;
+  border-top: $borderLine;
+  border-right: $borderLine;
+}
+
+.leftSquare {
+  
+  border-left: $borderLine;
+}
+
+.transparentLeftSquare {
+  border-left: 1px dashed transparent;
+}
+
+.transparentRightSquare {
+  border-right: 1px dashed transparent;
+}
+
+.bottomSquare {
+  border-bottom: $borderLine;
+}
+
+.topLeftSquare {
+  border-top-left-radius: $cornerRadius;
+}
+
+.bottomLeftSquare {
+  border-bottom-left-radius: $cornerRadius;
+}
+
+.topRightSquare {
+  border-top-right-radius: $cornerRadius;
+}
+
+.bottomRightSquare {
+  border-bottom-right-radius: $cornerRadius;
+}
+
+.centerBottomLeftSquare {
+  border-top: $centerLine;
+  border-right: $centerLine;
+}
+
+.centerTopLeftSquare {
+ border-right: $centerLine;
+}
+
+.centerBottomRightSquare {
+  border-top: $centerLine;
+ }

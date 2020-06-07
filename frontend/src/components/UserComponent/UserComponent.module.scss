@@ -1,0 +1,59 @@
+$formColor: rgba(0, 0, 0, 0.537);
+$nickButtonColor: rgb(218, 165, 32);
+$nickButtonHoverColor: rgba(218, 165, 32, 0.809);
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 230px;
+  height: 300px;
+  background-color: $formColor;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.paperPlayers {
+  color: white;
+  padding: 15px 15px 0;
+  font-size: 20x;
+}
+
+.nickForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 120px;
+}
+
+.nickInput {
+  width: 80%;
+}
+
+.nickButton {
+  width: 80%;
+}
+
+.gif {
+  background-image: url('../../assets/img/giphy.gif');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 60px;
+  margin-top: 20px;
+}
+
+.rules {
+  margin-top: auto;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: white;
+  font-size: 12px;
+}
+
+.rules:hover {
+  color: rgba(255, 255, 255, 0.619);
+}
