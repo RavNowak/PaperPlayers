@@ -1,50 +1,33 @@
+const socket = require('socket.io');
+
 const { playerInitController } = require('../controllers/socket_playerInitController');
 const { newOponentController } = require('../controllers/socket_newOponentController');
 const { txtMessageController } = require('../controllers/socket_txtMessageController');
 const { playerClearController } = require('../controllers/socket_playerClearController');
 const { newMoveController } = require('../controllers/socket_newMoveController');
-const { pongController } = require('../controllers/socket_pongController');
-
-const WebSocket = require('ws');
+const { userLeaveController } = require('../controllers/socket_userLeaveController');
+const { removeOponentController } = require('../controllers/socket_removeOponentController');
+const { disconnectController } = require('../controllers/socket_disconnectController');
 
 module.exports = {
   initializeWebSocketConnection: (server) => {
-    const wss = new WebSocket.Server({ server });
+    const io = socket(server);
 
-    wss.on('connection', ws => {
-      ws.on('message', (msg) => {
-        const message = JSON.parse(msg);
-
-        console.log(message);
-
-        switch (message.type) {
-          case 'PLAYER_INIT':
-            playerInitController(message, ws);
-            break;
-
-          case 'NEW_OPONENT':
-            newOponentController(message);
-            break;
-
-          case 'TXT_MESSAGE':
-            txtMessageController(message);
-            break;
-
-          case 'GAME_CLEAR':
-            playerClearController(message);
-            break;
-
-          case 'GAME_MOVES':
-            newMoveController(message);
-            break;
-
-          case 'PONG':
-            pongController(message);
-            break;
-
-          default: console.log('unknown command');
-        }
+    io.on('connection', (socket) => {
+      console.log('New user joined');
+   
+      socket.on('disconnect', () => {
+        
+        disconnectController(socket);
       });
-    });
+
+      socket.on('PLAYER_INIT',     (message) => { playerInitController(message, socket) });
+      socket.on('NEW_OPONENT',     (message) => { newOponentController(message) });
+      socket.on('TXT_MESSAGE',     (message) => { txtMessageController(message) });
+      socket.on('GAME_CLEAR',      (message) => { playerClearController(message) });
+      socket.on('GAME_MOVES',      (message) => { newMoveController(message) });
+      socket.on('USER_LEAVE',      (message) => { userLeaveController(message) });
+      socket.on('REMOVE_OPONENT',  (message) => { removeOponentController(message) });
+   });
   }
 }

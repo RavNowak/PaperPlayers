@@ -1,4 +1,4 @@
-const { getPlayerByNick, setPlayerSocket, removePlayer, startPlayerPing, stopPlayerPing } = require('../models/model');
+const { getPlayerByNick, setPlayerSocket } = require('../models/model');
 
 module.exports = {
   playerInitController: (message, socket) => {
@@ -8,18 +8,6 @@ module.exports = {
 
     if (!player) return;
   
-    if (player.socket) {
-      stopPlayerPing(player);
-    }
-
     setPlayerSocket(player, socket);
-    
-    startPlayerPing(player, () => {
-      removePlayer(player);
-    }, () => {
-      player.socket.send(JSON.stringify({
-        type: 'PING'
-      }));
-    }, 40000);
   }
 }

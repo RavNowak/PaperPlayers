@@ -4,15 +4,28 @@ $boardColor: rgba(0, 0, 0, 0.755);
   display: flex;
   flex-direction: column;
   align-items: center;
-  // justify-content: space-evenly;
+  justify-content: space-around;
   width: 90%;
   height: 411px; 
   background-color: $boardColor;
   border-radius: 15px;
 }
 
-.whovswho {
+.top {
   width: 70%;
+}
+
+.bottom {
+  width: 70%;
+  border-top: 1px solid white;
+  color: rgb(214, 202, 170);
+  padding: 5px;
+  text-align: center;
+
+}
+
+.whovswho {
+  // width: 70%;
   display: flex;
   justify-content: center;
   color: rgb(218, 165, 32);
@@ -25,7 +38,7 @@ $boardColor: rgba(0, 0, 0, 0.755);
 }
 
 .botMessage {
-  width: 70%;
+  // width: 70%;
   display: flex;
   justify-content: center;
   color: rgb(214, 202, 170);
@@ -33,5 +46,4 @@ $boardColor: rgba(0, 0, 0, 0.755);
   font-weight: 600;
   letter-spacing: 2px;
   text-align: center;
-  margin-bottom: 15px;
 }

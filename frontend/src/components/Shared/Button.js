@@ -18,13 +18,13 @@ const OrangeButton = withStyles((theme) => ({
 const JoinButton = withStyles((theme) => ({
   root: {
     color: 'white',
-    backgroundColor: 'rgba(255, 0, 0, 0.687)',
+    backgroundColor: 'rgba(236, 164, 29, 0.802)',
     width: '50%',
-    padding: 2,
+    padding: 1,
     borderRadius: 8,
     fontWeight: 600,
     '&:hover': {
-      backgroundColor: 'rgba(255, 0, 0, 0.887)',
+      backgroundColor: 'rgba(218, 165, 32, 0.809)',
     },
   },
 }))(Button);
@@ -47,15 +47,13 @@ const SendButton = withStyles((theme) => ({
 const AcceptMovesButton = withStyles((theme) => ({
   root: {
     color: 'white',
-    backgroundColor: 'rgb(218, 165, 32)',
-    width: '60%',
+    backgroundColor: 'transparent',
+    border: '2px solid rgb(218, 165, 32)',
+    width: '100px',
+    height: '100px',
     padding: 5,
-    marginTop: 15,
-    borderRadius: 5,
+    borderRadius: '50%',
     fontWeight: 600,
-    WebkitBoxShadow: '0px 0px 55px 0px rgba(250,240,127,1)',
-    MozBoxShadow: '0px 0px 55px 0px rgba(250,240,127,1)',
-    boxShadow: '0px 0px 55px 0px rgba(250,240,127,1)',
     '&:hover': {
       backgroundColor: 'rgba(218, 165, 32, 0.809)',
     },

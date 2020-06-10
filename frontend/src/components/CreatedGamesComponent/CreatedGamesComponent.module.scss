@@ -31,12 +31,14 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background-color: rgba(236, 164, 29, 0.802);
+  // background-color: rgba(42, 41, 40, 0.694);
+  border: 1px solid transparent;
+  border-bottom: 1px solid rgba(255, 166, 0, 0.204);
   border-radius: 12px;
 }
 
 .singleGame:hover {
-  background-color: rgba(236, 164, 29, 0.902);
+  border: 1px solid rgba(255, 166, 0, 0.524);
 }
 
 .descriptionGame {
@@ -46,7 +48,6 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  // background-color: rgb(171, 168, 168);
 }
 
 .descriptionItem {
@@ -78,4 +79,8 @@
 .joinButton {
   width: 24%;
   text-align: center;
+}
+
+i {
+  color: white;
 }

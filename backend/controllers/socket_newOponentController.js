@@ -2,16 +2,18 @@ const { getPlayerByNick, setPlayerOponent } = require('../models/model');
 
 module.exports = {
   newOponentController: (message) => {
-    const caller = message.nick;
+    const callerNick = message.nick;
     const oponentNick = message.oponent;
 
-    let player = getPlayerByNick(oponentNick);
+    let oponent = getPlayerByNick(oponentNick);
+    let player = getPlayerByNick(callerNick);
 
-    setPlayerOponent(player, caller);
-
-    player.socket.send(JSON.stringify({
-      type: 'NEW_OPONENT',
-      oponent: caller
-    }));
+    setPlayerOponent(oponent, callerNick);
+    setPlayerOponent(player, oponentNick);
+    
+    oponent.socket.send(JSON.stringify({
+        type: 'NEW_OPONENT',
+        oponent: callerNick
+      }));
   }
 }

@@ -6,14 +6,18 @@ const getPlayerByNick = (nick) => {
   }));
 }
 
+const getPlayerBySocket = (socket) => {
+  return (players.find(player => {
+    return player.socket == socket;
+  }));
+}
+
 const addPlayer = (nick) => {
   players.push({
     nick,
     game: null,
     socket: null,
-    oponent: null,
-    pingState: true,
-    ping: null
+    oponent: null
   })
 }
 
@@ -21,7 +25,7 @@ const getCreatedGames = () => {
   let createdGames = [];
 
   players.forEach(player => {
-    if (player.game !== null) {
+    if (player.game && !player.oponent) {
       createdGames.push({
         nick: player.nick,
         game: player.game
@@ -45,32 +49,9 @@ const setPlayerSocket = (player, socket) => {
 }
 
 const removePlayer = (player) => {
-  players = players.filter((player_) => {
-    return player_.nick != player.nick;
-  })
-
-  console.log('removed player');
-}
-
-const stopPlayerPing = (player) => {
-  clearInterval(player.ping);
-}
-
-const setPlayerPingState = (player, state) => {
-  player.pingState = state;
-}
-
-const startPlayerPing = (player, offlineCallback, onlineCallback, interval) => {
-  player.ping = setInterval(() => {
-    if (player.pingState === false) {
-      stopPlayerPing(player);
-      offlineCallback();
-    }
-    else {
-      setPlayerPingState(player, false);
-      onlineCallback();
-    }
-  }, interval);
+  // players = players.filter((player_) => {
+  //   return player_.nick != player.nick;
+  // })
 }
 
 const setPlayerOponent = (player, oponent) => {
@@ -79,20 +60,19 @@ const setPlayerOponent = (player, oponent) => {
 
 const clearPlayerInfo = (player) => {
   player.game = null;
+  player.socket = null;
   player.oponent = null;
 }
 
 module.exports = {
   getPlayerByNick,
+  getPlayerBySocket,
   addPlayer,
   getCreatedGames,
   addGameToPlayer,
   getPlayerGame,
   setPlayerSocket,
   removePlayer,
-  stopPlayerPing,
-  setPlayerPingState,
-  startPlayerPing,
   setPlayerOponent,
   clearPlayerInfo
 }

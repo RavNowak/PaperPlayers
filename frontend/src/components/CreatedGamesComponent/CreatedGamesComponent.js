@@ -80,9 +80,10 @@ class CreatedGamesComponent extends React.Component {
                 <span className={styles.playerItem}>{obj.nick}</span>
                 <span className={styles.borderSizeItem}>{this.getBorderSize(obj.game.borderSize)}</span>
                 <div className={styles.rules}>
-                  { obj.game.playingForTime && <i class="fas fa-hourglass"></i> }
-                  { obj.game.liveChat && <i class="fas fa-comment"></i> }
-                  { !obj.game.liveChat && <i class="fas fa-comment-slash"></i> }
+                  { obj.game.liveChat && <i className="fas fa-comment"></i> }
+                  { !obj.game.liveChat && <i className="fas fa-comment-slash"></i> }
+                  { obj.game.playingForTime && <i className="fas fa-hourglass"></i> }
+                  { obj.game.autocomplete && <i className="fab fa-autoprefixer"></i>}
                 </div>
                 <div className={styles.joinButton}>
                   <JoinButton onClick={this.handleJoinButtonClick}>JOIN</JoinButton>

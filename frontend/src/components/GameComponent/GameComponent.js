@@ -20,12 +20,14 @@ class GameComponent extends React.Component {
       allowMove: false
     }
 
-    this.socket = new Socket(this.props.nick, this.props.oponent)
+    console.log('GameComponent: ', this.props.nick, ' ', this.props.oponent)
+    this.socket = new Socket(this.props.nick, this.props.oponent);
   }
 
   componentDidMount = () => {
     EventEmitter.subscribe('NEW_OPONENT', this.handleNewOponentAppear);
-    EventEmitter.subscribe('GAME_MOVES', this.handleRecivedMoves)
+    EventEmitter.subscribe('GAME_MOVES', this.handleRecivedMoves);
+    EventEmitter.subscribe('USER_LEAVE', this.handleOponentLeave);
 
     if (this.props.oponent !== "") {
       this.setState({
@@ -38,14 +40,28 @@ class GameComponent extends React.Component {
   }
 
   componentWillUnmount = () => {
+    // this.socket.notifyLeave();
+
     this.props.setOponent('');
     this.props.setRules({});
     this.props.setInitializer(false);
 
-    this.socket.clearGame();
+    this.socket.kill();
+  }
+
+  handleOponentLeave = () => {
+      this.setState({
+        botMessage: 'Your oponent has left the game',
+        allowMove: false
+      });
+
+    this.props.setOponent('');
+    this.socket.setOponent('');
   }
 
   handleNewOponentAppear = (data) => {
+    console.log('handleNewOponentAppear');
+
     this.props.setOponent(data.oponent);
     this.socket.setOponent(data.oponent);
 
