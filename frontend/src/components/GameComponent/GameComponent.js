@@ -1,34 +1,45 @@
 import React from 'react';
-import styles from './GameComponent.module.scss';
 import BoardComponent from '../BoardComponent/BoardComponent';
 import ChatComponent from '../ChatComponent/ChatComponent';
 import InteractionComponent from '../InteractionComponent/InteractionComponent';
 import Socket from '../../Common/Socket/Socket';
+import styles from './GameComponent.module.scss';
+
 import { connect } from 'react-redux';
 import { EventEmitter } from '../../Common/EventEmitter';
 import { setOponent, setRules, setInitializer } from '../../redux/action';
+import { gamesService } from '../../services/gamesService';
+import { EventType } from '../../Common/EventTypes';
 
 class GameComponent extends React.Component {
   constructor(props) {
     super(props);
 
     this.moves = [];
+    this.timePerRound = null;
+    this.timer = null;
 
     this.state = {
       whovswho: `${this.props.nick} VS ?`,
       botMessage: 'Waiting for the oponent',
-      allowMove: false
+      allowMove: false,
+      second: null,
+      gameended: false
     }
 
-    console.log('GameComponent: ', this.props.nick, ' ', this.props.oponent)
     this.socket = new Socket(this.props.nick, this.props.oponent);
   }
 
   componentDidMount = () => {
-    EventEmitter.subscribe('NEW_OPONENT', this.handleNewOponentAppear);
-    EventEmitter.subscribe('GAME_MOVES', this.handleRecivedMoves);
-    EventEmitter.subscribe('USER_LEAVE', this.handleOponentLeave);
+    EventEmitter.subscribe(EventType.NEW_OPONENT, this.handleNewOponentAppear);
+    EventEmitter.subscribe(EventType.GAME_MOVES, this.handleRecivedMoves);
+    EventEmitter.subscribe(EventType.USER_LEAVE, this.handleOponentLeave);
+    EventEmitter.subscribe(EventType.USER_SURREND, this.handleOponentSurrended);
+    EventEmitter.subscribe(EventType.USER_WIN, this.handleOponentWin);
 
+    this.setTimePerRound();
+    this.handeFastGameRecreation();
+    
     if (this.props.oponent !== "") {
       this.setState({
         whovswho: `${this.props.oponent} VS ${this.props.nick}`,
@@ -40,8 +51,6 @@ class GameComponent extends React.Component {
   }
 
   componentWillUnmount = () => {
-    // this.socket.notifyLeave();
-
     this.props.setOponent('');
     this.props.setRules({});
     this.props.setInitializer(false);
@@ -51,7 +60,7 @@ class GameComponent extends React.Component {
 
   handleOponentLeave = () => {
       this.setState({
-        botMessage: 'Your oponent has left the game',
+        botMessage: 'Your oponent has left the game.\nGame over.',
         allowMove: false
       });
 
@@ -59,9 +68,23 @@ class GameComponent extends React.Component {
     this.socket.setOponent('');
   }
 
-  handleNewOponentAppear = (data) => {
-    console.log('handleNewOponentAppear');
+  handleOponentSurrended = () => {
+    this.setState({
+      botMessage: 'Your oponent surrended.\nYou won.',
+      allowMove: false,
+      gameended: true
+    });
+  }
 
+  handleOponentWin = () => {
+    this.setState({
+      botMessage: 'You lost the game.',
+      allowMove: false,
+      gameended: true
+    });
+  }
+
+  handleNewOponentAppear = (data) => {
     this.props.setOponent(data.oponent);
     this.socket.setOponent(data.oponent);
 
@@ -69,7 +92,20 @@ class GameComponent extends React.Component {
       whovswho: `${this.props.nick} VS ${this.props.oponent}`,
       botMessage: 'Your turn',
       allowMove: true
-    })
+    });
+
+    this.countTime();
+  }
+
+  handeFastGameRecreation = async () => {
+    if (this.props.initializer) {
+      try {
+        await gamesService.adddNewGame(this.props.nick, this.props.rules);
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
   }
 
   handleRecivedMoves = (data) => {
@@ -77,6 +113,8 @@ class GameComponent extends React.Component {
       botMessage: 'Your turn',
       allowMove: true
     });
+
+    this.countTime();
   }
 
   saveMove = (move) => {
@@ -88,15 +126,119 @@ class GameComponent extends React.Component {
           return;
         }
         else {
-          this.moves.splice(i,1);
-          console.log(this.moves);
+          this.moves.splice(i, 1);
+      
           return;
         }
       }
     }
 
     this.moves.push(move);
+  }
+
+  setTimePerRound = () => {
+    if (this.props.playingForTime) {
+      switch (this.props.time) {
+        case 'slow':
+          this.timePerRound = 120;
+          break;
+        case 'medium':
+          this.timePerRound = 60;
+          break;
+        case 'fast': 
+        this.timePerRound = 30;
+          break;
+        default: break;
+      }
+
+      this.setState({
+        second: this.timePerRound
+      });
+    }
+  }
+
+  countTime = () => {
+    if (this.props.playingForTime) {
+      let currentSecond = this.timePerRound;
+  
+      this.timer = setInterval(() => {
+        if (currentSecond === 0) {
+          clearInterval(this.timer);
+
+          this.setState({
+            botMessage: 'Waiting for the oponent move',
+            second: this.timePerRound,
+            allowMove: false
+          });
+
+          if (this.props.tourAutocomplete) {
+            this.sendMoves();
+          }
+          else {
+            this.handleOutOfTime();
+          }
+        }
+        else {
+          --currentSecond;
+  
+          this.setState({
+            second: currentSecond
+          });
+        }
+      }, 1000);
+    }
+  }
+
+  //
+  // If there is no tourAutocompleteand time is off 
+  // let's send no moves to notify oponent about his
+  // turn.
+  //
+
+  handleOutOfTime = () => {
+    this.socket.sendMoves([]);
     console.log(this.moves);
+    EventEmitter.dispatch(EventType.CLEAR_MOVES, this.moves);
+
+    this.moves = [];
+  }
+
+  resetTimer = () => {
+    if (this.props.playingForTime) {
+      clearInterval(this.timer);
+
+      this.setState({
+        second: this.timePerRound
+      });
+    }
+  }
+
+  handleOwnGoal = () => {
+    if (!this.state.gameended && this.state.allowMove) {
+      this.socket.surrend();
+  
+      this.setState({
+        botMessage: 'You shot own goal. You lost.',
+        allowMove: false,
+        gameended: true
+      });
+  
+      this.resetTimer();
+    }
+  }
+
+  handleWin = () => {
+    if (!this.state.gameended && this.state.allowMove) {
+      this.socket.notifyWin();
+  
+      this.setState({
+        botMessage: 'Congratulations ! You won.',
+        allowMove: false,
+        gameended: true
+      });
+  
+      this.resetTimer();
+    }
   }
 
   sendMoves = () => {
@@ -104,17 +246,20 @@ class GameComponent extends React.Component {
       return move.repaint === false;
     });
 
-    if (filteredMoves.length > 0) {
-      this.socket.sendMoves(filteredMoves);
+    this.socket.sendMoves(filteredMoves);
 
-      EventEmitter.dispatch('LINE_CONFIRMED', this.moves);
+    if (filteredMoves.length > 0) {
+      EventEmitter.dispatch(EventType.LINE_CONFIRMED, this.moves);
+  
       this.moves = [];
     }
 
+    this.resetTimer();
+
     this.setState({
       botMessage: 'Waiting for the oponent move',
-      allowMove: false
-    })
+      allowMove: false,
+    });
   }
 
   render = () => {
@@ -125,11 +270,18 @@ class GameComponent extends React.Component {
             whovswho={this.state.whovswho}
             botMessage={this.state.botMessage}
             allowMove={this.state.allowMove}
+            second={this.state.second}
             sendMoves={this.sendMoves}
           />
         </div>
         <div className={styles.center}>
-          <BoardComponent size={this.props.size} saveMove={this.saveMove} />
+          <BoardComponent 
+            size={this.props.size}
+            allowMove={this.state.allowMove}
+            saveMove={this.saveMove}
+            notifyOwnGoal={this.handleOwnGoal}
+            notifyWin={this.handleWin}
+          />
         </div>
         <div className={styles.right}>
           <ChatComponent socket={this.socket} />
@@ -144,7 +296,11 @@ const mapStateToProps = (state) => {
     nick: state.nick,
     size: state.rules.borderSize,
     oponent: state.oponent,
-    initializer: state.initializer
+    initializer: state.initializer,
+    playingForTime: state.rules.playingForTime,
+    time: state.rules.time,
+    tourAutocomplete: state.rules.autocomplete,
+    rules: state.rules
   }
 };
 

@@ -1,13 +1,13 @@
 import React from 'react';
-import styles from './RulesComponent.module.scss';
-import OrangeSelect from '../Shared/Select/Select';
-import OrangeCheckBox from '../Shared/CheckBox/CheckBox';
-import { OrangeButton } from '../Shared/Button';
+import OrangeSelect from '../../Common/MaterialUI/Select/Select';
+import OrangeCheckBox from '../../Common/MaterialUI/CheckBox/CheckBox';
 import ErrorComponent from '../ErrorComponent/ErrorComponent';
+import styles from './RulesComponent.module.scss';
+
+import { OrangeButton } from '../../Common/MaterialUI/Button';
 import { connect } from 'react-redux';
 import { setRules, setInitializer } from '../../redux/action';
-
-const axios = require('axios')
+import { gamesService } from '../../services/gamesService';
 
 class RulesComponent extends React.Component {
   constructor(props) {
@@ -103,15 +103,12 @@ class RulesComponent extends React.Component {
 
     if (rulesError === '') {
       try {
-        const response = await axios.post('http://localhost:8080/newGame', {
-          nick: this.props.nick,
-          rules
-        });
-        console.log(response);
+        const response = await gamesService.adddNewGame(this.props.nick, rules);
 
         if (response.data.OK) {
           this.props.setRules(rules);
           this.props.setInitializer(true);
+
           this.props.history.push('/game');
         }
       }
@@ -184,7 +181,6 @@ class RulesComponent extends React.Component {
               </div>
             }
           </div>
-
           <div className={styles.checkBoxses}>
             <div className={styles.checkBoxContainer}>
               <OrangeCheckBox
@@ -194,7 +190,6 @@ class RulesComponent extends React.Component {
               >
               </OrangeCheckBox>
             </div>
-
             <div className={styles.checkBoxContainer}>
               <OrangeCheckBox
                 handleChange={this.handleLiveChatChange}
@@ -203,7 +198,6 @@ class RulesComponent extends React.Component {
               >
               </OrangeCheckBox>
             </div>
-
             {
               this.state.playingForTime &&
               <div className={styles.checkBoxContainer}>

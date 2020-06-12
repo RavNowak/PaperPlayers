@@ -34,3 +34,51 @@
   // height: 100vh;
   // background-color: blue;
 }
+
+@media screen and (max-width: 1200px) {
+.container {
+  grid-template-columns: 100%;
+  grid-template-rows: 25% 50% 25%;
+}
+
+.center {
+  grid-column: 1/2;
+  grid-row: 2/3;
+}
+
+.left {
+  grid-column: 1/2;
+  grid-row: 1/2;
+  height: auto;
+}
+
+.right {
+  grid-column: 1/2;
+  grid-row: 3/4;
+}
+
+@media screen and (max-height: 758px) {
+  .container {
+    grid-template-columns: 100%;
+    grid-template-rows: 50% 50%;
+  }
+
+  .center {
+    display: none;
+  }
+
+  .left {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    height: auto;
+  }
+  
+  .right {
+    grid-column: 1/2;
+    grid-row: 2/3;
+  }
+
+}
+
+}
+

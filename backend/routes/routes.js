@@ -20,8 +20,6 @@ router.use(cors({
 
 router.use(bodyParser.json());
 
-// router.use(logController);
-
 router.post('/register', registerController);
 
 router.post('/newGame', newGameController);

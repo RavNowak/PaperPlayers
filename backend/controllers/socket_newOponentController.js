@@ -1,4 +1,5 @@
 const { getPlayerByNick, setPlayerOponent } = require('../models/model');
+const { EventType } = require('../routes/EventTypes');
 
 module.exports = {
   newOponentController: (message) => {
@@ -8,11 +9,13 @@ module.exports = {
     let oponent = getPlayerByNick(oponentNick);
     let player = getPlayerByNick(callerNick);
 
+    if(!oponent || !player) return;
+
     setPlayerOponent(oponent, callerNick);
     setPlayerOponent(player, oponentNick);
     
     oponent.socket.send(JSON.stringify({
-        type: 'NEW_OPONENT',
+        type: EventType.NEW_OPONENT,
         oponent: callerNick
       }));
   }

@@ -6,24 +6,22 @@ $goalBackgroundColor: rgba(0, 0, 0, 0.755);
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: black; */
   }
 
   @mixin goal {
     width: 40px;
     height: 80px;
     background-color: $goalBackgroundColor;
+    cursor: pointer;
   }
   
-  .goal {
-    width: 40px;
-    height: 80px;
-    background-color: $goalBackgroundColor;
-  }
-
   .redGoal {
     @include goal();
     border: 1px dashed red;
+  }
+
+  .redGoal:hover {
+    border: 1px solid red;
   }
 
   .greenGoal {
@@ -31,7 +29,15 @@ $goalBackgroundColor: rgba(0, 0, 0, 0.755);
     border: 1px dashed green;
   }
 
+  .greenGoal:hover {
+    border: 1px solid green;
+  }
+
   .blueGoal {
     @include goal();
     border: 1px dashed blue;
+  }
+
+  .blueGoal:hover {
+    border: 1px solid blue;
   }

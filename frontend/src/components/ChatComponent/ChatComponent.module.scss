@@ -1,17 +1,5 @@
 $boardColor: rgba(0, 0, 0, 0.755);
 
-.smallContainer {
-  height: 247px;
-  width: 90%;
-  background-color: blue;
-}
-
-.mediumContainer {
-  width: 90%;
-  height: 329px; 
-  background-color: blue;
-}
-
 .container {
   width: 90%;
   height: 411px; 
@@ -50,4 +38,15 @@ $boardColor: rgba(0, 0, 0, 0.755);
 
 .messageInput:focus {
   outline: none;
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    width: 70%;
+    height: 90%; 
+  }
+
+  .messages {
+    height: 80%;
+  }
 }

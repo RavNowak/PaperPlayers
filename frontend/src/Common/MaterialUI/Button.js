@@ -48,14 +48,17 @@ const AcceptMovesButton = withStyles((theme) => ({
   root: {
     color: 'white',
     backgroundColor: 'transparent',
-    border: '2px solid rgb(218, 165, 32)',
-    width: '100px',
-    height: '100px',
+    // border: '2px solid rgb(218, 165, 32)',
+    width: '100%',
+    height: '100%',
     padding: 5,
     borderRadius: '50%',
     fontWeight: 600,
     '&:hover': {
       backgroundColor: 'rgba(218, 165, 32, 0.809)',
+    },
+    '&:disabled': {
+      color: 'rgba(128, 128, 128, 0.483)'
     },
   },
 }))(Button);

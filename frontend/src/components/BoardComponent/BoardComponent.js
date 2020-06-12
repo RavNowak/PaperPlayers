@@ -1,20 +1,11 @@
 import React from 'react';
 import SquareComponent from '../SquareComponent/SquareComponent';
-import styles from './BoardComponent.module.scss';
 import GoalComponent from '../GoalComponent/GoalComponent';
+import styles from './BoardComponent.module.scss';
 
 class BoardComponent extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   addSquares = () => {
-    // const rows = this.props.rows;
-    // const columns = this.props.columns;
-
     const { rows, columns } = this.getRowsAndColumns();
-    console.log(rows, columns)
-
     let squares = [];
 
     for (let i = 1; i <= rows; i++) {
@@ -25,13 +16,16 @@ class BoardComponent extends React.Component {
           column: j
         }
 
-        squares.push(<SquareComponent
-          key={id_}
-          id={id_}
-          rows={rows}
-          columns={columns}
-          coordinates={coordinates_}
-          saveMove={this.props.saveMove} />)
+        squares.push(
+          <SquareComponent
+            key={id_}
+            id={id_}
+            rows={rows}
+            columns={columns}
+            coordinates={coordinates_}
+            saveMove={this.props.saveMove}
+            allowMove={this.props.allowMove}
+          />)
       }
     }
 
@@ -43,17 +37,26 @@ class BoardComponent extends React.Component {
       case 'small': return { rows: 6, columns: 10 }
       case 'medium': return { rows: 8, columns: 12 }
       case 'big': return { rows: 10, columns: 14 }
+      default: break;
     }
   }
 
   render() {
     return (
       <div className={styles.container}>
-        <GoalComponent left={true}/>
+        <GoalComponent 
+          left={true}
+          notifyOwnGoal={this.props.notifyOwnGoal}
+          notifyWin={this.props.notifyWin}
+        />
         <div className={styles[ this.props.size + 'Board' ]}>
           {this.addSquares()}
         </div>
-        <GoalComponent right={true}/>
+        <GoalComponent 
+          right={true}
+          notifyOwnGoal={this.props.notifyOwnGoal}
+          notifyWin={this.props.notifyWin}
+        />
         </div>
     );
   }

@@ -1,6 +1,9 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
 import { EventEmitter } from '../../Common/EventEmitter';
+import { EventType } from '../../Common/EventTypes';
+
 import './SquareComponent.scss';
 
 class SquareComponent extends React.Component {
@@ -50,10 +53,25 @@ class SquareComponent extends React.Component {
   }
 
   componentDidMount = () => {
-    EventEmitter.subscribe('GAME_MOVES', this.handleRecivedMoves);
-    EventEmitter.subscribe('LINE_CONFIRMED', this.handleOwnMovesConfirmed);
+    EventEmitter.subscribe(EventType.GAME_MOVES, this.handleRecivedMoves);
+    EventEmitter.subscribe(EventType.LINE_CONFIRMED, this.handleOwnMovesConfirmed);
+    EventEmitter.subscribe(EventType.CLEAR_MOVES, this.clearUnconfirmedMoves);
 
     this.setUserAndOponentColor();
+  }
+
+  clearUnconfirmedMoves = (localMoves) => {
+    for (const move of localMoves) {
+      if (move.id === this.props.id) {
+        for (let key in this.lines) {
+          const line = this.lines[ key ];
+          if (line.name === move.name) {
+            line.repaint = true;
+          }
+        }
+      }
+    }
+    this.clear();
   }
 
   handleRecivedMoves = (data) => {
@@ -64,7 +82,6 @@ class SquareComponent extends React.Component {
           if (line.name === move.name) {
             line.repaint = false;
             line.oponentConfirmed = true;
-            console.log('modified line: ', line);
           }
         }
         this.drawBorderLine(move, this.lineStyle.oponentBacklight);
@@ -102,6 +119,7 @@ class SquareComponent extends React.Component {
       case 'red': return 'rgb(255, 0, 0)';
       case 'green': return 'rgb(124, 252, 0)';
       case 'blue': return 'rgb(0, 191, 255)';
+      default: break;
     }
   }
 
@@ -187,7 +205,6 @@ class SquareComponent extends React.Component {
       style += this.squareStyle.transparentRightSquare;
     }
 
-    // style += this.getCornerStyle();
     style += this.getCenterStyle();
 
     return style;
@@ -297,11 +314,14 @@ class SquareComponent extends React.Component {
         ctx.strokeStyle = lineStyle.substring(10);
         ctx.stroke();
         break;
+      default: break;
     }
   }
 
   handleMouseClick = (e) => {
     e.preventDefault();
+
+    if (!this.props.allowMove) return;
 
     const line = this.getActiveLine(e.clientX, e.clientY);
 

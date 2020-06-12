@@ -1,18 +1,15 @@
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+
 import React from 'react';
 import Loader from 'react-loader-spinner';
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import { JoinButton } from '../Shared/Button';
 import styles from './CreatedGamesComponent.module.scss';
+
+import { JoinButton } from '../../Common/MaterialUI/Button';
 import { connect } from 'react-redux';
 import { setRules, setOponent } from '../../redux/action';
-
-const axios = require('axios')
+import { gamesService } from '../../services/gamesService';
 
 class CreatedGamesComponent extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   renderNoGames = () => {
     return (
       <div className={styles.main} style={{justifyContent: 'center'}}>
@@ -40,6 +37,7 @@ class CreatedGamesComponent extends React.Component {
       case 'small': return '6x10'
       case 'medium': return '8x12'
       case 'big': return '10x14'
+      default: break;
     }
   }
 
@@ -47,12 +45,8 @@ class CreatedGamesComponent extends React.Component {
     const gameInitializer = e.currentTarget.parentNode.parentNode.children.item(0).innerHTML;
 
     try {
-      const response = await axios.get('http://localhost:8080/initializerRules', {
-        params: {
-          nick: gameInitializer
-        }
-      });
-
+      const response = await gamesService.getInitializerRules(gameInitializer);
+       
       this.props.setRules(response.data.game);
       this.props.setOponent(gameInitializer);
       this.props.history.push('/game');    

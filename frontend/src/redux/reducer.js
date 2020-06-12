@@ -14,24 +14,23 @@ const reducer = (state = initialState, action) => {
         ...state,
         nick: action.nick
       }
-      case SET_RULES:
-        return {
-          ...state,
-          rules: action.rules
-        }
-      case SET_OPONENT:
-        return {
-          ...state,
-          oponent: action.oponent
-        }
-        case SET_INITIALIZER: 
-          return {
-            ...state,
-            initializer: action.initializer
-          }
-        
-      default: 
-        return state;
+    case SET_RULES:
+      return {
+        ...state,
+        rules: action.rules
+      }
+    case SET_OPONENT:
+      return {
+        ...state,
+        oponent: action.oponent
+      }
+    case SET_INITIALIZER:
+      return {
+        ...state,
+        initializer: action.initializer
+      }
+    default:
+      return state;
   }
 }
 

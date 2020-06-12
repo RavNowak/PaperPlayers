@@ -1,17 +1,7 @@
 import React from 'react';
 import styles from './SingleMessageComponent.module.scss';
-import moment from 'moment';
 
 class SingleMessageComponent extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  getTime = () => {
-    return moment().format("H:mm");
-  }
-
-
   render = () => (
     <div>
       {
@@ -19,13 +9,13 @@ class SingleMessageComponent extends React.Component {
         (
           <>
           <span className={styles.userMessage}>{this.props.text}</span>
-          <span className={styles.userTime}>{this.getTime()}</span>
+          <span className={styles.userTime}>{this.props.time}</span>
           </>
         ) :
         (
           <>
           <div className={styles.oponentMessage}>{this.props.text}</div>
-          <span className={styles.oponentTime}>{this.getTime()}</span>
+          <span className={styles.oponentTime}>{this.props.time}</span>
           </>
         )
       }

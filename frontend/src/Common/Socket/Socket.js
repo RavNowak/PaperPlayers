@@ -1,11 +1,6 @@
 import { EventEmitter } from '../EventEmitter';
+import { EventType } from '../EventTypes';
 import io from 'socket.io-client';
-import {
-  PLAYER_INIT,
-  ASK_FOR_GAMES,
-  NEW_GAME,
-  NEW_OPONENT
-} from './messageTypes';
 
 class Socket {
   constructor(nick, oponent) {
@@ -15,23 +10,19 @@ class Socket {
     this.oponent = oponent;
 
     this.socket.on('connect', () => {
-      console.log('connected to websocket server');
-
       this.registerUser();
       this.notifyOponent();
+    });
+
+    this.socket.on('disconnect', () => {
     });
 
     this.socket.on('message', (data) => {
       const message = JSON.parse(data);
 
       EventEmitter.dispatch(message.type, message);
-
-      console.log(`message received from server: ${data}`);
     });
 
-    this.socket.on('disconnect', () => {
-      console.log('A user disconnected');
-    });
 
     this.socket.on('error', (err) => {
       console.log('Socket error: ', err);
@@ -43,16 +34,14 @@ class Socket {
   }
 
   registerUser = () => {
-    this.socket.emit(PLAYER_INIT, {
+    this.socket.emit(EventType.PLAYER_INIT, {
       nick: this.nick
     });
   }
 
   notifyOponent = () => {
-    console.log('notifyOponent');
-    
     if (this.oponent !== "") {
-      this.socket.emit(NEW_OPONENT, {
+      this.socket.emit(EventType.NEW_OPONENT, {
         nick: this.nick,
         oponent: this.oponent
       });
@@ -61,7 +50,7 @@ class Socket {
 
   sendTxtMessage = (text) => {
     if (this.oponent !== "") {
-      this.socket.emit('TXT_MESSAGE', {
+      this.socket.emit(EventType.TXT_MESSAGE, {
         to: this.oponent,
         text
       });
@@ -69,14 +58,14 @@ class Socket {
   }
 
   clearGame = () => {
-    this.socket.emit('GAME_CLEAR', {
+    this.socket.emit(EventType.GAME_CLEAR, {
       nick: this.nick
     });
   }
 
   sendMoves = (moves) => {
     if (this.oponent !== "") {
-      this.socket.emit('GAME_MOVES', {
+      this.socket.emit(EventType.GAME_MOVES, {
         to: this.oponent,
         moves
       });
@@ -85,22 +74,33 @@ class Socket {
 
   notifyLeave = () => {
     if (this.oponent !== "") {
-      this.socket.emit('USER_LEAVE', {
+      this.socket.emit(EventType.USER_LEAVE, {
         to: this.oponent
       });
     }
   }
 
   removeOponent = () => {
-    this.socket.emit('REMOVE_OPONENT', {
+    this.socket.emit(EventType.REMOVE_OPONENT, {
       nick: this.nick
+    });
+  }
+
+  surrend = () => {
+    this.socket.emit(EventType.USER_SURREND, {
+      to: this.oponent
+    });
+  }
+
+  notifyWin = () => {
+    this.socket.emit(EventType.USER_WIN, {
+      to: this.oponent
     });
   }
 
   kill = () => {
     this.socket.close();
   }
-
 }
 
 export default Socket;

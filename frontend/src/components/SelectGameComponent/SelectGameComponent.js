@@ -1,9 +1,9 @@
 import React from 'react';
-import { OrangeButton } from '../Shared/Button';
 import CreatedGamesComponent from '../CreatedGamesComponent/CreatedGamesComponent';
 import styles from './SelectGameComponent.module.scss';
 
-const axios = require('axios');
+import { OrangeButton } from '../../Common/MaterialUI/Button';
+import { gamesService } from '../../services/gamesService';
 
 class GamesComponent extends React.Component {
   constructor(props) {
@@ -15,7 +15,6 @@ class GamesComponent extends React.Component {
   }
 
   handleCreatedGamesConfirmation = (obj) => {
-    console.log(obj)
     this.setState({
       games: obj.createdGames
     })
@@ -27,7 +26,7 @@ class GamesComponent extends React.Component {
   
   componentDidMount = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/createdGames');
+      const response = await gamesService.getCreatedGames();
 
       this.handleCreatedGamesConfirmation(response.data);
     }

@@ -5,6 +5,8 @@ module.exports = {
   disconnectController: (socket) => {
     let player = getPlayerBySocket(socket);
 
+    if (!player) return;
+
     userLeaveController({to: player.oponent});
     clearPlayerInfo(player);
 

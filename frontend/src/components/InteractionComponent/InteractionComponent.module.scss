@@ -11,21 +11,20 @@ $boardColor: rgba(0, 0, 0, 0.755);
   border-radius: 15px;
 }
 
-.top {
-  width: 70%;
+.topSection {
+  width: 80%;
 }
 
-.bottom {
-  width: 70%;
+.bottomSection {
+  width: 80%;
   border-top: 1px solid white;
   color: rgb(214, 202, 170);
-  padding: 5px;
+  padding: 10px;
   text-align: center;
 
 }
 
 .whovswho {
-  // width: 70%;
   display: flex;
   justify-content: center;
   color: rgb(218, 165, 32);
@@ -33,17 +32,67 @@ $boardColor: rgba(0, 0, 0, 0.755);
   font-weight: 600;
   letter-spacing: 2px;
   margin: 10px 0;
-  padding-bottom: 5px;
+  padding-bottom: 10px;
   border-bottom: 1px solid white;
 }
 
 .botMessage {
-  // width: 70%;
   display: flex;
   justify-content: center;
   color: rgb(214, 202, 170);
-  font-size: 10px;
-  font-weight: 600;
+  font-size: 12px;
   letter-spacing: 2px;
   text-align: center;
+}
+
+.rules {
+  text-decoration: none;
+  color: rgb(214, 202, 170);
+}
+
+.rules:hover {
+  color: rgb(218, 165, 32);
+}
+
+.circle {
+  width: 100px;
+  height: 100px;
+  border: 2px solid rgb(218, 165, 32);
+  border-radius: 50%;
+}
+
+@mixin time {
+  color: white;
+  position: relative;
+  top: -38%;
+  text-align: center;
+  margin: 0;
+  font-weight: 600;
+}
+
+.timeDisabled {
+  @include time;
+  color: rgba(128, 128, 128, 0.483);
+}
+
+.aLotOfTime {
+  @include time;
+  color:rgb(218, 165, 32);
+}
+
+.lessThan10Sec {
+  @include time;
+  color:red;
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    width: 70%;
+    height: 90%; 
+  }
+
+  .circle {
+    width: 75px;
+    height: 75px;
+  }
 }

@@ -1,9 +1,12 @@
 import React from 'react';
+import SingleMessageComponent from '../SingleMessageComponent/SingleMessageComponent';
+import moment from 'moment';
 import styles from './ChatComponent.module.scss';
-import { SendButton } from '../Shared/Button';
+
+import { SendButton } from '../../Common/MaterialUI/Button';
 import { EventEmitter } from '../../Common/EventEmitter';
 import { connect } from 'react-redux';
-import SingleMessageComponent from '../SingleMessageComponent/SingleMessageComponent';
+import { EventType } from '../../Common/EventTypes';
 
 class ChatComponent extends React.Component {
   constructor(props) {
@@ -18,7 +21,7 @@ class ChatComponent extends React.Component {
   }
 
   componentDidMount = () => {
-    EventEmitter.subscribe('TXT_MESSAGE', this.handleRemoteMessage);
+    EventEmitter.subscribe(EventType.TXT_MESSAGE, this.handleRemoteMessage);
   }
 
   handleNewMessage = (e) => {
@@ -36,7 +39,8 @@ class ChatComponent extends React.Component {
   handleRemoteMessage = (data) => {
     this.state.messages.push({
       author: 'oponent',
-      text: data.text
+      text: data.text,
+      time: this.getTime()
     });
 
     this.setState({
@@ -47,7 +51,8 @@ class ChatComponent extends React.Component {
   handleLocalMessage = () => {
     this.state.messages.push({
       author: 'user',
-      text: this.message.value
+      text: this.message.value,
+      time: this.getTime()
     });
 
     this.setState({
@@ -64,13 +69,17 @@ class ChatComponent extends React.Component {
       </div>)
   }
 
+  getTime = () => {
+    return moment().format("H:mm");
+  }
+
   render = () => {
     return (
       <div className={styles.container}>
         <div className={styles.messages}>
           {
             this.state.messages.map(message =>
-              <SingleMessageComponent author={message.author} text={message.text}></SingleMessageComponent>
+              <SingleMessageComponent author={message.author} text={message.text} time={message.time}></SingleMessageComponent>
             )
           }
         </div>

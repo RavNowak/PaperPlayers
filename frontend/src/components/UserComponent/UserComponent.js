@@ -1,12 +1,12 @@
 import React from 'react';
 import ErrorComponent from '../ErrorComponent/ErrorComponent';
-import NickInput from '../Shared/TextInput';
-import { OrangeButton } from '../Shared/Button';
-import { connect } from 'react-redux';
-import { setNick } from '../../redux/action';
+import NickInput from '../../Common/MaterialUI/TextInput';
 import styles from './UserComponent.module.scss';
 
-const axios = require('axios');
+import { OrangeButton } from '../../Common/MaterialUI/Button';
+import { connect } from 'react-redux';
+import { setNick } from '../../redux/action';
+import { registerService } from '../../services/registerService';
 
 class UserComponent extends React.Component {
   constructor(props) {
@@ -22,10 +22,7 @@ class UserComponent extends React.Component {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8080/register', {
-        nick: this.nick.value
-      });
-
+      const response = await registerService.register(this.nick.value);
       this.handleNickConfirmation(response.data);
     }
     catch(error) {

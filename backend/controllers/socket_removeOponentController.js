@@ -6,6 +6,8 @@ module.exports = {
 
     let player = getPlayerByNick(nick);
 
+    if (!player) return;
+
     setPlayerOponent(player, null);
   }
 }

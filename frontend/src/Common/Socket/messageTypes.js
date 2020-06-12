@@ -1,6 +1,0 @@
-module.exports = {
-  PLAYER_INIT: 'PLAYER_INIT',
-  ASK_FOR_GAMES: 'ASK_FOR_GAMES',
-  NEW_GAME: 'NEW_GAME',
-  NEW_OPONENT: 'NEW_OPONENT'
-}

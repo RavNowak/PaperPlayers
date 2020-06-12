@@ -49,9 +49,9 @@ const setPlayerSocket = (player, socket) => {
 }
 
 const removePlayer = (player) => {
-  // players = players.filter((player_) => {
-  //   return player_.nick != player.nick;
-  // })
+  players = players.filter((player_) => {
+    return player_.nick != player.nick;
+  })
 }
 
 const setPlayerOponent = (player, oponent) => {

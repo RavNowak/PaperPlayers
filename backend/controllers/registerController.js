@@ -1,6 +1,5 @@
 const { getPlayerByNick, addPlayer } = require('../models/model');
 
-
 module.exports = {
   registerController: (req, res) => {
     const { nick } = req.body;

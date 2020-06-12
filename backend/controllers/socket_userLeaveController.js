@@ -1,4 +1,5 @@
 const { getPlayerByNick } = require('../models/model');
+const { EventType } = require('../routes/EventTypes');
 
 module.exports = {
   userLeaveController: (message) => {
@@ -8,7 +9,7 @@ module.exports = {
 
     if (player && player.socket) {
       player.socket.send(JSON.stringify({
-        type: 'USER_LEAVE',
+        type: EventType.USER_LEAVE,
       }));
     }
   }

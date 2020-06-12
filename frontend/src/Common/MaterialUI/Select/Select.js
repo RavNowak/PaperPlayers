@@ -57,14 +57,6 @@ const NewFrom = withStyles((theme) => ({
 }))(FormControl);
 
 class OrangeSelect extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  handleChange = (e) => {
-    console.log(e.target.value);
-  };
-
   render = () => {
     return (
       <>
@@ -73,10 +65,9 @@ class OrangeSelect extends React.Component {
           <NewSelect
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            // value={age}
             onChange={this.props.handleChange}
           >
-            {this.props.items.map(item => <NewItem value={item.value}>{item.name}</NewItem>)}
+            {this.props.items.map(item => <NewItem value={item.value} key={item.value}>{item.name}</NewItem>)}
           </NewSelect>
         </NewFrom>
       </>
