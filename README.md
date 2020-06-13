@@ -1,9 +1,9 @@
-## PaperPlayers (probably the best game of this type :smirk:)
+# PaperPlayers (probably the best game of this type :smirk:)
 
 > LIVE: [click to play](https://paperplayers-dbe31.web.app)
 > <br>RULES: [click to check the rules](https://pl.wikipedia.org/wiki/Pi%C5%82karzyki_na_kartce)
 
-### Used tools:
+## Used tools:
 Backend:
 - Node.js
 - Express framework
@@ -14,7 +14,7 @@ Frontend:
 - MaterialUI
 - socket.io
 
-### Local building
+## Local building
 1. Inside ./backend dir:
 <br>a) type `npm i` to install the necessary external modules
 <br>b) type `npm start` to start local backend server process
@@ -23,7 +23,7 @@ Frontend:
 <br>b) type `npm start` to start local frontend server process
 <br>c) go to localhost:3000
 
-### Basic game options
+## Basic game options
 - [x] Creating player account
 - [x] Selecting border size
 - [x] Selecting user color
