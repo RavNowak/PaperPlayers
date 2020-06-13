@@ -1,4 +1,4 @@
-# PaperPlayers (probably the best game of this type :smirk:)
+# PaperPlayers [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 **LIVE:** [click to play](https://paperplayers-dbe31.web.app)
 <br>**RULES:** [click to check the rules](https://pl.wikipedia.org/wiki/Pi%C5%82karzyki_na_kartce)
