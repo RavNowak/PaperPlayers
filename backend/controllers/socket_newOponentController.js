@@ -13,6 +13,8 @@ module.exports = {
 
     setPlayerOponent(oponent, callerNick);
     setPlayerOponent(player, oponentNick);
+
+    if (!oponent.socket) return;
     
     oponent.socket.send(JSON.stringify({
         type: EventType.NEW_OPONENT,

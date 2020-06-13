@@ -1,2 +1,5 @@
 node_modules/
 build/
+frontend/.firebaserc
+frontend/firebase.json
+frontend/.firebase/

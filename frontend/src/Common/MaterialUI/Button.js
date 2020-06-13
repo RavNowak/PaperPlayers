@@ -48,7 +48,6 @@ const AcceptMovesButton = withStyles((theme) => ({
   root: {
     color: 'white',
     backgroundColor: 'transparent',
-    // border: '2px solid rgb(218, 165, 32)',
     width: '100%',
     height: '100%',
     padding: 5,

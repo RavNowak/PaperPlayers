@@ -18,22 +18,32 @@ class ChatComponent extends React.Component {
       messages: [],
       disabledChatWarning: false
     }
+
+    this.self = React.createRef();
   }
 
   componentDidMount = () => {
     EventEmitter.subscribe(EventType.TXT_MESSAGE, this.handleRemoteMessage);
+
+    this.scrollToBottom();
   }
+
+  scrollToBottom = () => {
+		this.self.current.scrollTop = this.self.current.scrollHeight;
+	};
 
   handleNewMessage = (e) => {
     e.preventDefault();
 
-    this.handleLocalMessage();
-
-    if (this.props.isChatEnabled) {
-      this.props.socket.sendTxtMessage(this.message.value);
+    if (this.message.value.length !== 0) {
+      this.handleLocalMessage();
+  
+      if (this.props.isChatEnabled) {
+        this.props.socket.sendTxtMessage(this.message.value);
+      }
+  
+      this.message.value = '';
     }
-
-    this.message.value = '';
   }
 
   handleRemoteMessage = (data) => {
@@ -45,7 +55,7 @@ class ChatComponent extends React.Component {
 
     this.setState({
       messages: this.state.messages
-    })
+    }, this.scrollToBottom)
   }
 
   handleLocalMessage = () => {
@@ -57,7 +67,7 @@ class ChatComponent extends React.Component {
 
     this.setState({
       messages: this.state.messages
-    })
+    }, this.scrollToBottom);
   }
 
   renderMessage = (message) => {
@@ -69,6 +79,27 @@ class ChatComponent extends React.Component {
       </div>)
   }
 
+  renderMessageBox = () => {
+    if (this.state.messages.length < 10) {
+      return <div className={styles.lessThan10Messages} ref={this.self}>
+      {
+        this.state.messages.map(message =>
+          <SingleMessageComponent author={message.author} text={message.text} time={message.time}></SingleMessageComponent>
+        )
+      }
+    </div>
+    }
+    else {
+      return <div className={styles.moreThan10Messages} ref={this.self}>
+      {
+        this.state.messages.map(message =>
+          <SingleMessageComponent author={message.author} text={message.text} time={message.time}></SingleMessageComponent>
+        )
+      }
+    </div>
+    }
+  }
+
   getTime = () => {
     return moment().format("H:mm");
   }
@@ -76,14 +107,7 @@ class ChatComponent extends React.Component {
   render = () => {
     return (
       <div className={styles.container}>
-        <div className={styles.messages}>
-          {
-            this.state.messages.map(message =>
-              <SingleMessageComponent author={message.author} text={message.text} time={message.time}></SingleMessageComponent>
-            )
-          }
-        </div>
-
+        { this.renderMessageBox() }
         <form onSubmit={this.handleNewMessage} className={styles.messageCreation}>
           {
             this.props.isChatEnabled && this.props.oponent ?

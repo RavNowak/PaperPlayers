@@ -3,20 +3,27 @@ $boardColor: rgba(0, 0, 0, 0.755);
 .container {
   width: 90%;
   height: 411px; 
-  // background-color: $boardColor;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.messages {
+@mixin messages {
   height: 91%;
   border-top-left-radius: 13px;
-  border-top-right-radius: 13px;
   background-color: $boardColor;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+}
+
+.lessThan10Messages {
+  @include messages();
+  border-top-right-radius: 13px;
+}
+
+.moreThan10Messages {
+  @include messages();
 }
 
 .messageCreation {
@@ -27,9 +34,7 @@ $boardColor: rgba(0, 0, 0, 0.755);
 
 .messageInput {
   width: 85%;
-  // border-top-left-radius: 15px;
   border-bottom-left-radius: 13px;
-  // border-radius: 15px;
   background-color: $boardColor;
   color: white;
   padding: 8px;
