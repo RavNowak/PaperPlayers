@@ -21,7 +21,7 @@ Frontend:
 2. Inside ./frontend dir:
 <br>a) type `npm i` to install the necessary external modules
 <br>b) type `npm start` to start local frontend server process
-<br>c) go to localhost:3000
+<br>c) go to http://localhost:3000
 
 ## Basic game options
 - [x] Creating player account
