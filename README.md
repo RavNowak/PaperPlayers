@@ -11,6 +11,7 @@ Backend:
 
 Frontend:
 - React
+- Redux
 - MaterialUI
 - socket.io
 
@@ -32,4 +33,3 @@ Frontend:
 - [x] Selecting time per round
 - [x] Selecting tour autocomplete
 - [x] Enabling/Disabling live chat
-- [x] Selecting time per round
