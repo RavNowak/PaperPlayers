@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './ErrorComponent.module.scss';
+import styles from './InfoComponent.module.scss';
 
 class ErrorComponent extends React.Component {
   render = () => {
     return (
-      <span className={styles.error}>{this.props.message}</span>
+      <span className={styles.info}>{this.props.message}</span>
     )
   }
 }

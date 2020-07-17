@@ -1,5 +1,5 @@
 import React from 'react';
-import ErrorComponent from '../ErrorComponent/ErrorComponent';
+import ErrorComponent from '../InfoComponent/InfoComponent';
 import NickInput from '../../Common/MaterialUI/TextInput';
 import styles from './UserComponent.module.scss';
 
@@ -12,20 +12,25 @@ class UserComponent extends React.Component {
   constructor(props) {
     super(props);
     this.nick = React.createRef();
+    this.loginInfo = 'Connecting to the server . . .';
 
     this.state = {
-      nickError: '',
+      loginState: '',
     }
   }
 
   handleSubmit = async (e) => {
     e.preventDefault();
 
+    this.setState({
+      loginState: this.loginInfo
+    });
+
     try {
       const response = await registerService.register(this.nick.value);
       this.handleNickConfirmation(response.data);
     }
-    catch(error) {
+    catch (error) {
       console.log(error);
     }
   }
@@ -44,16 +49,16 @@ class UserComponent extends React.Component {
     this.props.history.push('/games');
   }
 
-  handleInvalidNick = (nickError) => {
+  handleInvalidNick = (loginState) => {
     this.setState({
-      nickError
+      loginState
     })
   }
 
   handleInputChange = () => {
-    if (this.state.nickError !== '') {
+    if (this.state.loginState !== '' && this.state.loginState !== this.loginInfo) {
       this.setState({
-        nickError: ''
+        loginState: ''
       })
     }
   }
@@ -63,14 +68,14 @@ class UserComponent extends React.Component {
       <span className={styles.paperPlayers}>PAPER PLAYERS</span>
       <form onSubmit={this.handleSubmit}
         className={styles.nickForm}>
-        <div className={styles.nickInput}> 
-          <NickInput label="Type your nick" 
-                     inputRef={n => this.nick = n}
-                     onChange={this.handleInputChange}>
+        <div className={styles.nickInput}>
+          <NickInput label="Type your nick"
+            inputRef={n => this.nick = n}
+            onChange={this.handleInputChange}>
 
           </NickInput>
         </div>
-        {this.state.nickError ? <ErrorComponent message={this.state.nickError}></ErrorComponent> : ''}
+        {this.state.loginState ? <ErrorComponent message={this.state.loginState}></ErrorComponent> : ''}
         <div className={styles.nickButton}>
           <OrangeButton type="submit"> Submit </OrangeButton>
         </div>

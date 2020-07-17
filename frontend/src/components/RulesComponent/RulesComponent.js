@@ -1,7 +1,7 @@
 import React from 'react';
 import OrangeSelect from '../../Common/MaterialUI/Select/Select';
 import OrangeCheckBox from '../../Common/MaterialUI/CheckBox/CheckBox';
-import ErrorComponent from '../ErrorComponent/ErrorComponent';
+import ErrorComponent from '../InfoComponent/InfoComponent';
 import styles from './RulesComponent.module.scss';
 
 import { OrangeButton } from '../../Common/MaterialUI/Button';

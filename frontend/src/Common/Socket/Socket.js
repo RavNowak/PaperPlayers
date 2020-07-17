@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 
 class Socket {
   constructor(nick, oponent) {
+    // this.socket = io('https://paperplayers.herokuapp.com/');
     this.socket = io('http://localhost:8080');
   
     this.nick = nick;
