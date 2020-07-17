@@ -7,7 +7,7 @@ export const gamesService = {
     },
 
     adddNewGame: (nick, rules) => {
-      // return axios.get('https://paperplayers.herokuapp.com/newGame');
+      // return axios.post('https://paperplayers.herokuapp.com/newGame', {
         return axios.post('http://localhost:8080/newGame', {
         nick,
         rules
