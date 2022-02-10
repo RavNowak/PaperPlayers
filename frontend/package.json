@@ -11,7 +11,7 @@
     "axios": "^0.19.2",
     "firebase-tools": "^8.4.2",
     "moment": "^2.25.3",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "now": "^19.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
